@@ -7,6 +7,3 @@
 ## Leistungsbeurteilungen
  -   [LB2](./LB2)
  -   [LB3](./LB3)
-<br>
-<br>
-Repository von [Johannes Flaschberger](https://github.com/johannesflaschberger)
