@@ -7,4 +7,3 @@
 ## Leistungsbeurteilungen
  -   [LB2](./LB2/README.md)
  -   [LB3](./LB3/README.md)
-

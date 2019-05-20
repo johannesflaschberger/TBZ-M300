@@ -1,0 +1,32 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.define "db01" do |db|
+    db.vm.box = "ubuntu/bionic64"
+	db.vm.provider "virtualbox" do |vb|
+	  vb.memory = "512"  
+	end
+    db.vm.hostname = "db01"
+    db.vm.synced_folder ".", "/vagrant"
+    db.vm.network "private_network", ip: "192.168.120.10"
+  	db.vm.provision "shell", path: "db.sh"
+    db.vm.provision "shell", inline: <<-SHELL
+        sudo apt update && sudo apt upgrade -y
+    SHELL
+  end
+  config.vm.define "fe01" do |fe|
+    fe.vm.box = "ubuntu/bionic64"
+	fe.vm.provider "virtualbox" do |vb|
+	  vb.memory = "512"  
+    end
+    fe.vm.hostname = "fe01"
+    fe.vm.synced_folder ".", "/vagrant/"
+    fe.vm.network "private_network", ip: "192.168.120.11"
+  	fe.vm.provision "shell", path: "seafile.sh"
+    fe.vm.provision "shell", inline: <<-SHELL
+        sudo apt update && sudo apt upgrade -y
+    SHELL
+  end
+end
