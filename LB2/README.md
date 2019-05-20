@@ -2,6 +2,10 @@
 Seafile setup mit MySQL Datenbank
 
 ### Inhalt <!-- omit in toc -->
-- [Service](#service)
+- [Vorbereitung](#vorbereitung)
+- [Installation](#installation)
+- [Details zur Implementierung](#details-zur-implementierung)
 
-## Service
+### Vorbereitung
+### Installation
+### Details zur Implementierung
