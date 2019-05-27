@@ -4,11 +4,16 @@
 VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  # IP-Adressen der Hosts festlegen
+  # In diesem Abschnitt können Umgebungsvariablen definiert werden
   db01 = "192.168.120.10"
   fe01 = "192.168.120.11"
   dbPassword = "seafile"
 
+  # Fest programmierte Werte:
+  # db user für seafile: seafile
+  # Root passwort wird nicht definiert
+
+  # Konfigurationsabschnitt
   config.vm.define "db01" do |db|
     db.vm.box = "centos/7"
 	  db.vm.provider "virtualbox" do |vb|
