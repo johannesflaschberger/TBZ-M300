@@ -2,15 +2,21 @@
 Seafile setup mit MySQL Datenbank
 
 ### Inhalt <!-- omit in toc -->
-- [Vorbereitung](#vorbereitung)
 - [Installation](#installation)
-  - [Todo](#todo)
-- [Details zur Implementierung](#details-zur-implementierung)
+  - [TODO](#todo)
+  - [How to](#how-to)
+  - [Details zur Implementierung](#details-zur-implementierung)
+- [Dokumentation](#dokumentation)
+  - [Linux](#linux)
+  - [Virtualisierung](#virtualisierung)
+  - [Vagrant](#vagrant)
+  - [Versionsverwaltung / Git](#versionsverwaltung--git)
+  - [Mark Down](#mark-down)
+  - [Systemsicherheit](#systemsicherheit)
 
-### Vorbereitung
 ### Installation
 
-#### Todo
+#### TODO
 - [ ] UFW implementieren -> Kapitel 25
 - [ ] Answer to skript "Y Y N N Y N Y Y N" | ./your_script 
 - [ ] Tabelle mit Vagrantbefehle
@@ -24,4 +30,19 @@ Seafile setup mit MySQL Datenbank
 - [ ] Reflexion über implementierung
 - [ ] Setup Seafile 7.0 Newest version
 
-### Details zur Implementierung
+#### How to
+
+#### Details zur Implementierung
+
+### Dokumentation
+#### Linux
+
+#### Virtualisierung
+
+#### Vagrant
+
+#### Versionsverwaltung / Git
+
+#### Mark Down
+
+#### Systemsicherheit
