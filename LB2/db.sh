@@ -3,7 +3,7 @@
 # Updates herunterladen
 sudo yum update -y
 
-# Wget herunterladen für nächsten befehl
+# Wget herunterladen
 sudo yum install -y wget
 
 # Benötigte Repositories herunterladen und installieren
