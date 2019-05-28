@@ -20,4 +20,4 @@ sudo ufw reload
 # Delete DB-Password file
 sudo rm -rf /etc/profile.d/db-passwd.sh
 
-echo "Database setup script complete!"
+echo "Frontend setup script complete!"
