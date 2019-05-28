@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Updates herunterladen
 sudo yum update -y
 
