@@ -11,7 +11,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Fest programmierte Werte:
   # db user für seafile: seafile
-  # Root passwort wird nicht definiert
+  # Datenbanknamen: seafiledb seahubdb ccnetdb
 
   # Konfigurationsabschnitt
   config.vm.define "db01" do |db|

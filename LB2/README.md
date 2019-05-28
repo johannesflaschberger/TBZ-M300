@@ -28,6 +28,7 @@ Seafile setup mit MySQL Datenbank
 - [ ] Reverse Proxy einrichten /vagrant/fwrp
 - [ ] Sicherheitsmassnahmen dokumentiert ufw + reverse proxy + evtl ngrok
 - [ ] Reflexion über implementierung
+- [ ] Root MySQL Password festlegen
 - [ ] Setup Seafile 7.0 Newest version
 
 #### How to
