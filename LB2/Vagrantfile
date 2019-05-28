@@ -22,9 +22,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     db.vm.hostname = "db01"
     # db.vm.synced_folder ".", "/vagrant"
     db.vm.network "private_network", ip: db01
-    db.vm.provision "shell", path: "db.sh"
     db.vm.provision "shell", inline: "echo 'export db01=#{db01}\nexport fe01=#{fe01}' > /etc/profile.d/hostips.sh"
     db.vm.provision "shell", inline: "echo 'export dbPassword=#{dbPassword}' > /etc/profile.d/db-passwd.sh"
+    db.vm.provision "shell", path: "db.sh"
   end
   config.vm.define "fe01" do |fe|
     fe.vm.box = "centos/7"
@@ -34,9 +34,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     fe.vm.hostname = "fe01"
     # fe.vm.synced_folder ".", "/vagrant"
     fe.vm.network "private_network", ip: fe01
-  	fe.vm.provision "shell", path: "seafile.sh"
     fe.vm.provision "shell", inline: "echo 'export db01=#{db01}\nexport fe01=#{fe01}' > /etc/profile.d/hostips.sh"
     fe.vm.provision "shell", inline: "echo 'export dbPassword=#{dbPassword}' > /etc/profile.d/db-passwd.sh"
+    fe.vm.provision "shell", path: "seafile.sh"
   end
   if Vagrant.has_plugin?("vagrant-proxyconf")
     config.proxy.http     = "http://proxy.corproot.net:8079/"
