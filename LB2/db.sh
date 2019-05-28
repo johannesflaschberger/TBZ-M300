@@ -31,7 +31,7 @@ sudo mysql -u root -e "CREATE USER 'seafile'@'$fe01';"
 # Datenbanken erstellen
 dbNames="seafiledb seahubdb ccnetdb"
 for i in $dbNames; do
-    sudo mysql -u root -e "CREATE DATABASE $i CHARACTER SET utf8 IF NOT EXISTS"
+    sudo mysql -u root -e "CREATE DATABASE IF NOT EXISTS $i CHARACTER SET utf8;"
 done
 
 # Berechtigungen für seafile user definieren
