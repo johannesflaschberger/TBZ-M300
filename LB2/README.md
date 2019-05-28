@@ -18,6 +18,7 @@ Seafile setup mit MySQL Datenbank
 
 #### TODO
 - [ ] UFW implementieren -> Kapitel 25
+- [ ] Synched folder dbdirs und seahub-data
 - [ ] Answer to skript "Y Y N N Y N Y Y N" | ./your_script 
 - [ ] Tabelle mit Vagrantbefehle
 - [ ] Netzwerkplan in ASCII Grafik -> Übersicht Server /vagrant/fwrp
