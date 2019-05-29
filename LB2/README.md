@@ -96,8 +96,20 @@ Ergebnis:
 * 	common name: seafilesrv
 * 	issuer: CN=seafilesrv,O=IT,L=Zurich,ST=Zurich,C=CH
 ```
-- 
-
+- Verbindung über HTTP wird auf HTTPS weitergeleitet ✅
+```
+curl -vk http://localhost
+```
+Ergebnis:
+```
+< HTTP/1.1 301 Moved Permanently
+< Server: nginx
+< Date: Wed, 29 May 2019 23:46:39 GMT
+< Content-Type: text/html
+< Content-Length: 162
+< Connection: keep-alive
+< Location: https://localhost/
+```
 ## Dokumentation
 ### Linux
 
