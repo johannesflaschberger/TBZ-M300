@@ -40,6 +40,6 @@ for i in $dbNames; do
 done
 
 # DB-Password file löschen
-sudo rm -rf /etc/profile.d/db-passwd.sh
+sudo rm -rf /etc/profile.d/passwd.sh
 
 echo "Database setup script complete!"
