@@ -8,7 +8,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   db01 = "192.168.120.10"
   fe01 = "192.168.120.11"
   dbPassword = "seafile"
-  dbRootPassword= "seafile-root"
 
   # Fest programmierte Werte:
   # db user für seafile: seafile
@@ -24,7 +23,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # db.vm.synced_folder ".", "/vagrant"
     db.vm.network "private_network", ip: db01
     db.vm.provision "shell", inline: "echo 'export db01=#{db01}\nexport fe01=#{fe01}' > /etc/profile.d/hostips.sh"
-    db.vm.provision "shell", inline: "echo 'export dbPassword=#{dbPassword} export dbRootPassword=#{dbRootPassword}' > /etc/profile.d/db-passwd.sh"
+    db.vm.provision "shell", inline: "echo 'export dbPassword=#{dbPassword}' > /etc/profile.d/db-passwd.sh"
     db.vm.provision "shell", path: "db.sh"
   end
   config.vm.define "fe01" do |fe|
