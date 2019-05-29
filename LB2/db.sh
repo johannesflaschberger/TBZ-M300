@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Updates herunterladen
-sudo yum update -y
+# sudo yum update -y
 
 # Wget herunterladen
 sudo yum install wget -y

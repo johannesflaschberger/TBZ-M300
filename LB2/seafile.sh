@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Updates herunterladen
-sudo yum update -y
+# sudo yum update -y
 
 # Wget herunterladen
 sudo yum install wget -y
@@ -20,6 +20,7 @@ echo "y" | sudo ufw delete 3    # Delete default allow any sshv6
 sudo ufw allow from 10.0.2.2 to any port 80
 sudo ufw allow from 10.0.2.2 to any port 443
 sudo ufw reload
+sudo setsebool -P httpd_can_network_connect 1
 
 # SSL Self Signed Zertifikat erstellen
 sudo mkdir /root/ssl
@@ -103,6 +104,7 @@ wget https://download.seadrive.org/seafile-server_7.0.0_x86-64.tar.gz -P /tmp &>
 tar -xzvf /tmp/seafile-server_7.0.0_x86-64.tar.gz -C /home/vagrant/ &> /dev/null
 /home/vagrant/seafile-server-7.0.0/setup-seafile-mysql.sh auto -n $serverName -i $fe01 -p 8082 -d /home/vagrant/seafile-data/ -e 1 -o $db01 -t 3306 -u seafile -w $dbPassword -c ccnetdb -s seafiledb -b seahubdb
 rm /tmp/seafile-server_7.0.0_x86-64.tar.gz
+sudo chown -R vagrant:vagrant /home/vagrant/
 
 # Erklärung der benutzen Parameter
 # auto
@@ -122,10 +124,10 @@ cp /home/vagrant/seafile-server-latest/check_init_admin.py  /home/vagrant/seafil
 seafileAdminPw=$(pwgen)
 eval "sed -i 's/= ask_admin_email()/= \"${seafileAdmin}\"/' /home/vagrant/seafile-server-latest/check_init_admin.py"
 eval "sed -i 's/= ask_admin_password()/= \"${seafileAdminPw}\"/' /home/vagrant/seafile-server-latest/check_init_admin.py"
-/home/vagrant/seafile-server-latest/seafile.sh start
-/home/vagrant/seafile-server-latest/seahub.sh start
-/home/vagrant/seafile-server-latest/seafile.sh stop
-/home/vagrant/seafile-server-latest/seahub.sh stop
+sudo  -u vagrant /home/vagrant/seafile-server-latest/seafile.sh start
+sudo  -u vagrant /home/vagrant/seafile-server-latest/seahub.sh start
+sudo  -u vagrant /home/vagrant/seafile-server-latest/seafile.sh stop
+sudo  -u vagrant /home/vagrant/seafile-server-latest/seahub.sh stop
 mv /home/vagrant/seafile-server-latest/check_init_admin.py.bkp /home/vagrant/seafile-server-latest/check_init_admin.py
 
 # Seafile config
@@ -147,7 +149,7 @@ Group=vagrant
 WantedBy=multi-user.target
 EOL
 
-sudo cat > /etc/systemd/system/seafile.service << EOL
+sudo cat > /etc/systemd/system/seahub.service << EOL
 [Unit]
 Description=Seafile hub
 After=network.target seafile.service
@@ -166,7 +168,9 @@ EOL
 # Daemon neustarten, services starten und enablen
 sudo systemctl daemon-reload
 sudo systemctl start seafile
+sleep 2
 sudo systemctl start seahub
+sleep 1
 sudo systemctl enable seafile
 sudo systemctl enable seahub
 
