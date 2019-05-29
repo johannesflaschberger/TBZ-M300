@@ -20,8 +20,9 @@ Linux-Distribution: `Centos 7`
 Seafile Version: `7.0.0 Beta`
 
 **Umgebungsvariablen festlegen**  
-In dem Vagrantfile können diverse Variablen angepasst werden  
-| Variabel | Bedeutung
+In dem Vagrantfile können diverse Variablen angepasst werden 
+
+| Variable | Bedeutung |
 | --- | --- |
 | `fe01` | IP-Adresse des Frontend Servers | 
 | `db01` | IP-Adresse des Backend Servers |
