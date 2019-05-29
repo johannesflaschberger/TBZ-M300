@@ -8,6 +8,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   db01 = "192.168.120.10"
   fe01 = "192.168.120.11"
   dbPassword = "seafile"
+  serverName = "seafilesrv"
+  seafileAdmin = "email@email.com"
 
   # Fest programmierte Werte:
   # db user für seafile: seafile
@@ -23,7 +25,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # db.vm.synced_folder ".", "/vagrant"
     db.vm.network "private_network", ip: db01
     db.vm.provision "shell", inline: "echo 'export db01=#{db01}\nexport fe01=#{fe01}' > /etc/profile.d/hostips.sh"
-    db.vm.provision "shell", inline: "echo 'export dbPassword=#{dbPassword}' > /etc/profile.d/db-passwd.sh"
+    db.vm.provision "shell", inline: "echo 'export dbPassword=#{dbPassword}' > /etc/profile.d/passwd.sh"
     db.vm.provision "shell", path: "db.sh"
   end
   config.vm.define "fe01" do |fe|
@@ -34,8 +36,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     fe.vm.hostname = "fe01"
     # fe.vm.synced_folder ".", "/vagrant"
     fe.vm.network "private_network", ip: fe01
-    fe.vm.provision "shell", inline: "echo 'export db01=#{db01}\nexport fe01=#{fe01}' > /etc/profile.d/hostips.sh"
-    fe.vm.provision "shell", inline: "echo 'export dbPassword=#{dbPassword}' > /etc/profile.d/db-passwd.sh"
+    fe.vm.network "forwarded_port", guest: 80, host: 80
+    fe.vm.network "forwarded_port", guest: 443, host: 443
+    fe.vm.provision "shell", inline: "echo 'export db01=#{db01}\nexport fe01=#{fe01}\nexport serverName=#{serverName}' > /etc/profile.d/hostips.sh"
+    fe.vm.provision "shell", inline: "echo 'export dbPassword=#{dbPassword}\nexport seafileAdmin=#{seafileAdmin}' > /etc/profile.d/passwd.sh"
     fe.vm.provision "shell", path: "seafile.sh"
   end
 end
