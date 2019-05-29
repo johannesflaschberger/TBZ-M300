@@ -8,7 +8,7 @@ Seafile setup mit MySQL Datenbank
   - [Details zur Implementierung](#details-zur-implementierung)
 - [Dokumentation](#dokumentation)
   - [Linux](#linux)
-  - [Virtualisierung](#virtualisierung)
+  - [Virtualisierung mit Virtualbox](#virtualisierung-mit-virtualbox)
   - [Vagrant](#vagrant)
   - [Versionsverwaltung / Git](#versionsverwaltung--git)
   - [Mark Down](#mark-down)
@@ -39,9 +39,10 @@ Seafile setup mit MySQL Datenbank
 ### Dokumentation
 #### Linux
 
-#### Virtualisierung
+#### Virtualisierung mit Virtualbox
 
-#### Vagrant
+#### Vagrant 
+Da wir in meinem Geschäft auch Vagrant für unsere eigene lokale Test-Umgebung verwenden ist Vagrant für mich kein Fremdwort. Mir fiel das festlegen der Konfiguration leicht. Neu gelernt habe ich, dass man auch Variablen definieren kann innerhalb eines Vagrantfile. Dies bietet den Vorteil, dass man, wenn richtig implementiert, viel Zeit sparen kann wenn beispielsweise ein anderes Datenbank Passwort verwendet werden soll.
 
 #### Versionsverwaltung / Git
 
