@@ -15,6 +15,20 @@ Seafile setup mit MySQL Datenbank
 - [Reflexion](#reflexion)
 
 ### Installation
+**Übersicht**
+```
++--------------------------------------------------------+                                  
+|             Privates Netz: 192.168.120.0/24            |                                  
+----------------------------------------------------------                                  
+| +--------------------+          +--------------------+ |                                  
+| | Frontend Server    |          | Datenbank Server   | |                                  
+| | Host: fe01         |          | Host: db01         | |                                  
+| | IP: 192.168.120.11 | <------> | IP: 192.168.120.10 | |                                  
+| | Port: -            |          | Port: 3306         | |                                  
+| | NAT: 80, 443       |          | NAT: -             | |                                  
+| +--------------------+          +--------------------+ |                                  
++--------------------------------------------------------+
+```
 **Implementierungsdetails**  
 Linux-Distribution: `Centos 7`  
 Seafile Version: `7.0.0 Beta`
