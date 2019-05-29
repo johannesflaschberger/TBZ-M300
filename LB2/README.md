@@ -64,23 +64,39 @@ vagrant up
 > Hinweis: Am Ende der Installation wird das Admin Account Passwort für Seafile im stdout angezeigt
 
 #### TODO
-- [ ] UFW implementieren -> Kapitel 25
 - [ ] Synched folder dbdirs und seahub-data
-- [ ] Answer to skript "Y Y N N Y N Y Y N" | ./your_script 
 - [ ] Tabelle mit Vagrantbefehle
-- [ ] Netzwerkplan in ASCII Grafik -> Übersicht Server /vagrant/fwrp
 - [ ] Nach Bewertungsraster
 - [ ] Dokumentation testfälle mit curl -> Bsp. Port aktiv
 - [ ] Vagrant aus vagrantcloud dokumentieren up + init
 - [ ] Allgemein Dokumentation + Vagrant + Virtualbox 
-- [ ] Reverse Proxy einrichten /vagrant/fwrp
 - [ ] Sicherheitsmassnahmen dokumentiert ufw + reverse proxy + evtl ngrok
 - [ ] Reflexion über implementierung
-- [ ] Root MySQL Password festlegen
-- [ ] Setup Seafile 7.0 Newest version
 
 #### Testing
 ```curl https://localhost -k```
+- Verbindung über HTTPS möglich ✅
+```
+curl -vk https://localhost
+```
+Ergebnis:
+```
+* About to connect() to localhost port 443 (#0)
+*   Trying ::1...
+* Connection refused
+*   Trying 127.0.0.1...
+* Connected to localhost (127.0.0.1) port 443 (#0)
+* Initializing NSS with certpath: sql:/etc/pki/nssdb
+* skipping SSL peer certificate verification
+* SSL connection using TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+* Server certificate:
+* 	subject: CN=seafilesrv,O=IT,L=Zurich,ST=Zurich,C=CH
+* 	start date: May 29 23:18:52 2019 GMT
+* 	expire date: May 28 23:18:52 2020 GMT
+* 	common name: seafilesrv
+* 	issuer: CN=seafilesrv,O=IT,L=Zurich,ST=Zurich,C=CH
+```
+- 
 
 ## Dokumentation
 ### Linux
