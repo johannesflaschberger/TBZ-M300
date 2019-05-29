@@ -3,6 +3,9 @@
 # Updates herunterladen
 # sudo yum update -y
 
+# Timezone setzen
+export TZ='Europe/Zurich'
+
 # Wget herunterladen
 sudo yum install wget -y
 
