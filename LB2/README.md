@@ -4,8 +4,7 @@ Seafile setup mit MySQL Datenbank
 ### Inhalt <!-- omit in toc -->
 - [Installation](#installation)
   - [TODO](#todo)
-  - [How to](#how-to)
-  - [Details zur Implementierung](#details-zur-implementierung)
+  - [Testing](#testing)
 - [Dokumentation](#dokumentation)
   - [Linux](#linux)
   - [Virtualisierung mit Virtualbox](#virtualisierung-mit-virtualbox)
@@ -16,6 +15,29 @@ Seafile setup mit MySQL Datenbank
 - [Reflexion](#reflexion)
 
 ### Installation
+**Implementierungsdetails**  
+Linux-Distribution: `Centos 7`  
+Seafile Version: `7.0.0 Beta`
+
+**Umgebungsvariablen festlegen**  
+In dem Vagrantfile können diverse Variablen angepasst werden
+| Variable      | Bedeutung                          | 
+| ------------- |:----------------------------------:| 
+| `fe01`        | IP-Adresse des Frontend Servers    | 
+| `db01`        | IP-Adresse des Backend Servers     |
+| `dbPassword`  | Datenbankpasswort des Seafile-Users|
+| `serverName`  | Servername = Common name           |
+| `seafileAdmin`| Email Adresse des Server Admins|
+- IP-Adressen der Hosts `fe01` & `db01`
+- Datenbankpasswort des Seafile-Users `dbPassword`
+
+**Umgebung starten**  
+Um die Umgebung mit Vagrant zu starten muss der folgende Befehl getätigt werden:  
+```
+vagrant up
+```
+
+> Hinweis: Am Ende der Installation wird das Admin Account Passwort für Seafile im stdout angezeigt
 
 #### TODO
 - [ ] UFW implementieren -> Kapitel 25
@@ -33,9 +55,8 @@ Seafile setup mit MySQL Datenbank
 - [ ] Root MySQL Password festlegen
 - [ ] Setup Seafile 7.0 Newest version
 
-#### How to
-
-#### Details zur Implementierung
+#### Testing
+```curl https://localhost -k```
 
 ### Dokumentation
 #### Linux
