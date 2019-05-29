@@ -4,7 +4,7 @@
 sudo yum update -y
 
 # Wget herunterladen
-sudo yum install -y wget
+sudo yum install wget -y
 
 # Benötigte Repositories herunterladen und installieren
 sudo yum install epel-release -y
@@ -13,7 +13,7 @@ sudo rpm -ivh /tmp/mysql-community-release-el7-5.noarch.rpm
 rm /tmp/mysql-community-release-el7-5.noarch.rpm
 
 # Mysql server installieren und starten
-sudo yum install -y mysql-server
+sudo yum install mysql-server -y
 sudo systemctl start mysqld
 
 # Ufw installieren und einrichten
@@ -36,10 +36,10 @@ done
 
 # Berechtigungen für seafile user definieren
 for i in $dbNames; do
-    sudo mysql -u root -e "GRANT ALL PRIVILEGES ON $i.* TO 'seafile'@'$fe01' IDENTIFIED BY '$DBPASSWORD' WITH GRANT OPTION;"
+    sudo mysql -u root -e "GRANT ALL PRIVILEGES ON $i.* TO 'seafile'@'$fe01' IDENTIFIED BY '$dbPassword' WITH GRANT OPTION;"
 done
 
-# Delete DB-Password file
+# DB-Password file löschen
 sudo rm -rf /etc/profile.d/db-passwd.sh
 
 echo "Database setup script complete!"
