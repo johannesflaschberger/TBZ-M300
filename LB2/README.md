@@ -1,10 +1,11 @@
 # LB2 <!-- omit in toc -->
-Seafile setup mit MySQL Datenbank
-
 ### Inhalt <!-- omit in toc -->
+- [Ziel](#ziel)
+- [Übersicht](#%C3%BCbersicht)
 - [Installation](#installation)
-  - [TODO](#todo)
-  - [Testing](#testing)
+  - [Umgebung starten](#umgebung-starten)
+    - [TODO](#todo)
+    - [Testing](#testing)
 - [Dokumentation](#dokumentation)
   - [Linux](#linux)
   - [Virtualisierung mit Virtualbox](#virtualisierung-mit-virtualbox)
@@ -14,8 +15,10 @@ Seafile setup mit MySQL Datenbank
   - [Systemsicherheit](#systemsicherheit)
 - [Reflexion](#reflexion)
 
-### Installation
-**Übersicht**
+## Ziel
+Mein Ziel bei dieser LB ist es, automatisiert mithilfe von Bash-Skripts einen gesamten Dateien Cloud Dienst (Seafile) aufzusetzten. Dabei möchte ich die Datenbank auf einer seperaten Maschine haben. Damit man keine fest programmierten Werte hat, möchte ich zudem bei der Implementierung darauf achten, dass die wichtigsten Werte durch Variablen im Vagrantfile definiert werden. Die Cloud soll mit einem selbst signiertem Zertifikat über HTTPS erreichbar sein. Hierfür muss noch zusätzlich ein Reverse Proxy eingerichtet werden.
+
+## Übersicht
 ```
 +--------------------------------------------------------+                                  
 |            Privates Netz: 192.168.120.0/24             |                                  
@@ -29,12 +32,20 @@ Seafile setup mit MySQL Datenbank
 | +--------------------+          +--------------------+ |                                  
 +--------------------------------------------------------+
 ```
-**Implementierungsdetails**  
-Linux-Distribution: `Centos 7`  
-Seafile Version: `7.0.0 Beta`
+Verwendete Linux-Distribution: `Centos 7`  
+Seafile Version: `7.0.0 Beta`  
 
-**Umgebungsvariablen festlegen**  
-In dem Vagrantfile können diverse Variablen angepasst werden 
+## Installation
+**Variablen festlegen**  
+In dem oberen Abschnitt des Vagrantfile können diverse Variablen nach belieben angepasst werden.
+```
+# In diesem Abschnitt können Umgebungsvariablen definiert werden
+db01 = "192.168.120.10"
+fe01 = "192.168.120.11"
+dbPassword = "seafile"
+serverName = "seafilesrv"
+seafileAdmin = "email@email.com"
+```
 
 | Variable | Bedeutung |
 | --- | --- |
@@ -44,8 +55,8 @@ In dem Vagrantfile können diverse Variablen angepasst werden
 | `serverName` | Servername = Common name |
 | `seafileAdmin` | Email Adresse des Server Admins |
 
-**Umgebung starten**  
-Um die Umgebung mit Vagrant zu starten muss der folgende Befehl getätigt werden:  
+### Umgebung starten  
+Um die Umgebung zu starten muss der folgende Befehl getätigt werden:  
 ```
 vagrant up
 ```
@@ -71,18 +82,27 @@ vagrant up
 #### Testing
 ```curl https://localhost -k```
 
-### Dokumentation
-#### Linux
+## Dokumentation
+### Linux
 
-#### Virtualisierung mit Virtualbox
+### Virtualisierung mit Virtualbox
 
-#### Vagrant 
+### Vagrant 
 Da wir in meinem Geschäft auch Vagrant für unsere eigene lokale Test-Umgebung verwenden ist Vagrant für mich kein Fremdwort. Mir fiel das festlegen der Konfiguration leicht. Neu gelernt habe ich, dass man auch Variablen definieren kann innerhalb eines Vagrantfile. Dies bietet den Vorteil, dass man, wenn richtig implementiert, viel Zeit sparen kann wenn beispielsweise ein anderes Datenbank Passwort verwendet werden soll.
 
-#### Versionsverwaltung / Git
+Meine meist verwendeten Befehle erklärt:
+| Befehl | Erklärung |
+| --- | --- |
+| `vagrant up` | Dieser Befehl startet die im Vagrantfile definierten Umgebung Schritt für Schritt. | 
+| `db01` | IP-Adresse des Backend Servers |
+| `dbPassword` | Datenbankpasswort des Seafile-Users |
+| `serverName` | Servername = Common name |
+| `seafileAdmin` | Email Adresse des Server Admins |
 
-#### Mark Down
+### Versionsverwaltung / Git
 
-#### Systemsicherheit
+### Mark Down
 
-### Reflexion
+### Systemsicherheit
+
+## Reflexion
