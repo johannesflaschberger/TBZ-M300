@@ -9,6 +9,13 @@ sudo yum install wget -y
 # Benötigte Repositories herunterladen und installieren
 sudo yum install epel-release -y
 sudo rpm --import http://li.nux.ro/download/nux/RPM-GPG-KEY-nux.ro && sudo rpm -Uvh http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-5.el7.nux.noarch.rpm
+sudo cat > /etc/yum.repos.d/nginx.repo << EOL
+[nginx]
+name=nginx repo
+baseurl=http://nginx.org/packages/mainline/centos/7/\$basearch/
+gpgcheck=0
+enabled=1
+EOL
 sudo yum install python-imaging MySQL-python python-distribute python-memcached python-ldap python-urllib3 ffmpeg ffmpeg-devel python-requests pwgen -y
 
 # Ufw installieren und einrichten
@@ -91,9 +98,6 @@ http {
             proxy_send_timeout  36000s;
             send_timeout  36000s;
         }
-        location /media {
-            root /home/vagrant/seafile-server-latest/seahub;
-        }
     }
 }
 EOL
@@ -120,17 +124,20 @@ sudo chown -R vagrant:vagrant /home/vagrant/
 # -c ccnet-db name
 # -s seafile-db name
 # -b seahub-db name
+
 cp /home/vagrant/seafile-server-latest/check_init_admin.py  /home/vagrant/seafile-server-latest/check_init_admin.py.bkp
-seafileAdminPw=$(pwgen)
+export seafileAdminPw=$(pwgen)
 eval "sed -i 's/= ask_admin_email()/= \"${seafileAdmin}\"/' /home/vagrant/seafile-server-latest/check_init_admin.py"
 eval "sed -i 's/= ask_admin_password()/= \"${seafileAdminPw}\"/' /home/vagrant/seafile-server-latest/check_init_admin.py"
-sudo  -u vagrant /home/vagrant/seafile-server-latest/seafile.sh start
-sudo  -u vagrant /home/vagrant/seafile-server-latest/seahub.sh start
-sudo  -u vagrant /home/vagrant/seafile-server-latest/seafile.sh stop
-sudo  -u vagrant /home/vagrant/seafile-server-latest/seahub.sh stop
+sudo -u vagrant /home/vagrant/seafile-server-latest/seafile.sh start
+sudo -u vagrant /home/vagrant/seafile-server-latest/seahub.sh start
+sudo -u vagrant /home/vagrant/seafile-server-latest/seafile.sh stop
+sudo -u vagrant /home/vagrant/seafile-server-latest/seahub.sh stop
 mv /home/vagrant/seafile-server-latest/check_init_admin.py.bkp /home/vagrant/seafile-server-latest/check_init_admin.py
 
 # Seafile config
+sudo -u vagrant sed -i -E "s/(http)(:\/\/)(.*)(:.{4})/https\2localhost/" ccnet.conf
+sudo -u vagrant sed -i "3 i\HTTP_SERVER_ROOT = 'https://localhost/seafhttp'" seahub_settings.py
 
 # Seafile und seahub service erstellen
 sudo cat > /etc/systemd/system/seafile.service << EOL
@@ -174,9 +181,19 @@ sleep 1
 sudo systemctl enable seafile
 sudo systemctl enable seahub
 
+echo "Frontend Provisionsskript abgeschlossen!"
+echo "----------------------------------------"
+echo " "
+echo "Admin Account:"
+echo "Seafile Admin Email: $seafileAdmin"
+echo "Seafile Admin Passwort: $seafileAdminPw"
+echo " "
+echo "Datenbank Verbindung"
+echo "MySQL Usernamen: seafile"
+echo "MySQL User Passwort: $dbPassword"
+echo "MySQL Datenbank host: $db01"
+
 # DB-Password file löschen
 sudo rm -rf /etc/profile.d/passwd.sh
 unset seafileAdminPw
 
-echo "Frontend setup script complete!"
-echo "Seafile Admin User password: $seafileAdminPw"
