@@ -132,7 +132,7 @@ Meine meist verwendeten Befehle erklärt:
 Git ist ein need to have bei Programmierprojekten, da es ermöglicht festzustellen wann und welche Änderungen von jemanden getätigt wurden. In meinem Geschäft verwenden wir Git täglich und somit komm ich mit Git gut zurecht. Erweiterte Befehle und Anwendungen kenne ich auch wie z.B. Git flow.
 
 ### Mark Down
-Mit Markkdown kann man sehr einfach gut aussehende Dokumentationen erstellen und im grossen und ganzen ist der Syntax nicht sonderlich Schwer:  
+Mit Markkdown kann man sehr einfach gut aussehende Dokumentationen erstellen und im grossen und ganzen ist der Syntax nicht sonderlich schwer:  
 `# Überschrift 1`  
 `## Überschrift 2`  
 `### Überschrift 3`  
