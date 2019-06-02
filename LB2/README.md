@@ -65,8 +65,6 @@ vagrant up
 
 #### TODO
 - [ ] Synched folder dbdirs und seahub-data
-- [ ] Tabelle mit Vagrantbefehle
-- [ ] Nach Bewertungsraster
 - [ ] Dokumentation testfälle mit curl -> Bsp. Port aktiv
 - [ ] Vagrant aus vagrantcloud dokumentieren up + init
 - [ ] Allgemein Dokumentation + Vagrant + Virtualbox 
