@@ -118,7 +118,7 @@ Ergebnis:
 ### Vagrant 
 Da wir in meinem Geschäft auch Vagrant für unsere eigene lokale Test-Umgebung verwenden ist Vagrant für mich kein Fremdwort. Mir fiel das festlegen der Konfiguration leicht. Neu gelernt habe ich, dass man auch Variablen definieren kann innerhalb eines Vagrantfile. Dies bietet den Vorteil, dass man, wenn richtig implementiert, viel Zeit sparen kann wenn beispielsweise ein anderes Datenbank Passwort verwendet werden soll.
 
-Meine meist verwendeten Befehle erklärt:
+Meine meist verwendeten Befehle erklärt: 
 | Befehl | Erklärung |
 | --- | --- |
 | `vagrant up` | Dieser Befehl startet die im Vagrantfile definierten Umgebung Schritt für Schritt. | 
