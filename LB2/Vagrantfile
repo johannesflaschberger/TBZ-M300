@@ -7,7 +7,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # In diesem Abschnitt können Umgebungsvariablen definiert werden
   db01 = "192.168.120.10"
   fe01 = "192.168.120.11"
-  dbPassword = "seafile"
+  dbPassword = "oB7ainoghae4eelah1"
   serverName = "seafilesrv"
   seafileAdmin = "email@email.com"
 

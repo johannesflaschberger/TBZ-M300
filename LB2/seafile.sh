@@ -139,8 +139,8 @@ sudo -u vagrant /home/vagrant/seafile-server-latest/seahub.sh stop
 mv /home/vagrant/seafile-server-latest/check_init_admin.py.bkp /home/vagrant/seafile-server-latest/check_init_admin.py
 
 # Seafile config
-sudo -u vagrant sed -i -E "s/(http)(:\/\/)(.*)(:.{4})/https\2localhost/" ccnet.conf
-sudo -u vagrant sed -i "3 i\HTTP_SERVER_ROOT = 'https://localhost/seafhttp'" seahub_settings.py
+sudo -u vagrant sed -i -E "s/(http)(:\/\/)(.*)(:.{4})/https\2localhost/" /home/vagrant/conf/ccnet.conf
+sudo -u vagrant sed -i "3 i\HTTP_SERVER_ROOT = 'https://localhost/seafhttp'" /home/vagrant/conf/seahub_settings.py
 
 # Seafile und seahub service erstellen
 sudo cat > /etc/systemd/system/seafile.service << EOL
