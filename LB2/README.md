@@ -110,8 +110,10 @@ Ergebnis:
 ```
 ## Dokumentation
 ### Linux
+Mit Linux komme ich sehr gut zurecht, denn in meinem Geschäft verwenden wir auf unseren Produktionsservern RHEL in kombination mit Ansible. Es ist ein konstanter Wissensaufbau. Während dem erarbeiten von diesem Modul habe ich beispielsweise den unterschied von '' zu "" gelernt. In den Double Quotes (") werden Variablen wie bespielsweise $1 immernoch von der Shell mit dem Wert ersetzt und bei Single Quotes (') würde diese Variable nicht von der Shell ersetzt werden.
 
 ### Virtualisierung mit Virtualbox
+Die Virtualisierung mit Virtualbox ist für mich auch kein Neuland. Virtualbox ist optimal für Linux VM's und in Kombination mit Vagrant ein Super Virtualisierungsprogramm. Windows VM's funktionieren auf Virtualbox nicht sonderlich gut nach meiner Erfahrung.
 
 ### Vagrant 
 Da wir in meinem Geschäft auch Vagrant für unsere eigene lokale Test-Umgebung verwenden ist Vagrant für mich kein Fremdwort. Mir fiel das festlegen der Konfiguration leicht. Neu gelernt habe ich, dass man auch Variablen definieren kann innerhalb eines Vagrantfile. Dies bietet den Vorteil, dass man, wenn richtig implementiert, viel Zeit sparen kann wenn beispielsweise ein anderes Datenbank Passwort verwendet werden soll.
@@ -127,9 +129,17 @@ Meine meist verwendeten Befehle erklärt:
 | `vagrant ssh-config` | Dieser Befehl zeigt die SSH Konfigration der Virtuellen Maschine an, Port, Key u.v.m. |
 
 ### Versionsverwaltung / Git
+Git ist ein need to have bei Programmierprojekten, da es ermöglicht festzustellen wann und welche Änderungen von jemanden getätigt wurden. In meinem Geschäft verwenden wir Git täglich und somit komm ich mit Git gut zurecht. Erweiterte Befehle und Anwendungen kenne ich auch wie z.B. Git flow.
 
 ### Mark Down
-
+Mit Markkdown kann man sehr einfach gut aussehende Dokumentationen erstellen und im grossen und ganzen ist der Syntax nicht sonderlich Schwer:  
+`# Überschrift 1`  
+`## Überschrift 2`  
+`### Überschrift 3`  
+\`code\` für Code  
+`- [ ] Für Checklisten`  
+`- [Test](https://google.ch) Für Verlinkungen inklusive das einbinden von Bildern`  
+u.v.m
 ### Systemsicherheit
 
 ## Reflexion
