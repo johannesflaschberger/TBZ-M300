@@ -127,9 +127,9 @@ Meine meist verwendeten Befehle erklärt:
 
 | Variable | Bedeutung |
 | --- | --- |
-| `vagrant up` | Dieser Befehl startet die im Vagrantfile definierten Umgebung Schritt für Schritt. | 
+| `vagrant up` | Dieser Befehl startet die im Vagrantfile definierten Umgebung Schritt für Schritt | 
 | `vagrant halt` | Mit diesem Befehl werden die Virtuellen Maschinen gestoppt |
-| `vagrant destroy` | Zerstört die erstellen VM's. |
+| `vagrant destroy` | Zerstört die erstellen VM's |
 | `vagrant reload` | Startet die Maschinen neu und lädt eine neue Vagrantfile konfiguration |
 | `vagrant status` | Zeigt den status der VM's an |
 | `vagrant ssh-config` | Dieser Befehl zeigt die SSH Konfigration der Virtuellen Maschine an, Port, Key u.v.m. |
