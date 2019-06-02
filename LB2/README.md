@@ -119,13 +119,14 @@ Ergebnis:
 Da wir in meinem Geschäft auch Vagrant für unsere eigene lokale Test-Umgebung verwenden ist Vagrant für mich kein Fremdwort. Mir fiel das festlegen der Konfiguration leicht. Neu gelernt habe ich, dass man auch Variablen definieren kann innerhalb eines Vagrantfile. Dies bietet den Vorteil, dass man, wenn richtig implementiert, viel Zeit sparen kann wenn beispielsweise ein anderes Datenbank Passwort verwendet werden soll.
 
 Meine meist verwendeten Befehle erklärt: 
-| Befehl | Erklärung |
+
+| Variable | Bedeutung |
 | --- | --- |
 | `vagrant up` | Dieser Befehl startet die im Vagrantfile definierten Umgebung Schritt für Schritt. | 
-| `db01` | IP-Adresse des Backend Servers |
-| `dbPassword` | Datenbankpasswort des Seafile-Users |
-| `serverName` | Servername = Common name |
-| `seafileAdmin` | Email Adresse des Server Admins |
+| `vagrant halt` | Mit diesem Befehl werden die Virtuellen Maschinen gestoppt |
+| `vagrant reload` | Startet die Maschienen neu und lädt eine neue Vagrantfile konfiguration |
+| `vagrant status` | Zeigt den status der VM's an |
+| `vagrant ssh-config` | Dieser Befehl zeigt die SSH Konfigration der Virtuellen Maschine an, Port, Key u.v.m. |
 
 ### Versionsverwaltung / Git
 
