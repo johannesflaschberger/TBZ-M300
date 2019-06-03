@@ -4,7 +4,6 @@
 - [Übersicht](#%C3%BCbersicht)
 - [Installation](#installation)
   - [Umgebung starten](#umgebung-starten)
-    - [TODO](#todo)
     - [Testfälle](#testf%C3%A4lle)
 - [Dokumentation](#dokumentation)
   - [Linux](#linux)
@@ -49,6 +48,7 @@ fe01 = "192.168.120.11"
 dbPassword = "seafile"
 serverName = "seafilesrv"
 seafileAdmin = "email@email.com"
+# seafileAdminPw = Wird während der Installation generiert, wird am ende ausgegeben
 ```
 
 | Variable | Bedeutung |
@@ -58,6 +58,7 @@ seafileAdmin = "email@email.com"
 | `dbPassword` | Datenbankpasswort des Seafile-Users |
 | `serverName` | Servername = Common name |
 | `seafileAdmin` | Email Adresse des Server Admins |
+| `serviceURL` | ServiceURL für Seafile |
 
 ### Umgebung starten  
 Um die Umgebung zu starten muss der folgende Befehl getätigt werden:  
@@ -66,13 +67,6 @@ vagrant up
 ```
 
 > Hinweis: Am Ende der Installation wird das Admin Account Passwort für Seafile im stdout angezeigt
-
-#### TODO
-- [ ] Synched folder dbdirs und seahub-data
-- [ ] Dokumentation testfälle mit curl -> Bsp. Port aktiv
-- [ ] Sicherheitsmassnahmen dokumentiert ufw + reverse proxy + evtl ngrok
-- [ ] ServiceURL 
-- [ ] Reflexion über implementierung
 
 #### Testfälle
 ```curl https://localhost -k```
@@ -150,6 +144,7 @@ Mit Markkdown kann man sehr einfach gut aussehende Dokumentationen erstellen und
 u.v.m
 ### Systemsicherheit
 Reverse Proxy
+Da Seafile mehrere Ports benötigt (8000, 8082) ist es sinnvoll einen Reverse Proxy aufzusetzen. In meiner Implementation ist der Port 8000 auf / und der Port 8082 auf /seafhttp gemappt. Wenn richtig implementiert verschleiert ein Reverse Proxy auch die Herkunft der Daten.
 
 UFW
 Uncomplicated Firewall ist eine sehr einfach zu konfigurierende Host Firewall.
