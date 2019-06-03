@@ -33,7 +33,6 @@ sudo ufw reload
 sudo setsebool -P httpd_can_network_connect 1
 
 # SSL Self Signed Zertifikat erstellen
-sudo mkdir /root/ssl
 echo "Zertifikate erstellen ..."
 sudo openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -subj "/C=CH/ST=Zurich/L=Zurich/O=IT/CN=$serverName" -keyout /etc/ssl/certs/privkey.key  -out /etc/ssl/certs/cert.crt &> /dev/null
 sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048 &> /dev/null
@@ -107,6 +106,7 @@ EOL
 sudo systemctl restart nginx
 
 # Download seafile
+echo "Seafile herunterladen ..."
 wget https://download.seadrive.org/seafile-server_7.0.0_x86-64.tar.gz -P /tmp &> /dev/null
 tar -xzvf /tmp/seafile-server_7.0.0_x86-64.tar.gz -C /home/vagrant/ &> /dev/null
 /home/vagrant/seafile-server-7.0.0/setup-seafile-mysql.sh auto -n $serverName -i $fe01 -p 8082 -d /home/vagrant/seafile-data/ -e 1 -o $db01 -t 3306 -u seafile -w $dbPassword -c ccnetdb -s seafiledb -b seahubdb
@@ -139,8 +139,8 @@ sudo -u vagrant /home/vagrant/seafile-server-latest/seahub.sh stop
 mv /home/vagrant/seafile-server-latest/check_init_admin.py.bkp /home/vagrant/seafile-server-latest/check_init_admin.py
 
 # Seafile config
-sudo -u vagrant sed -i -E "s/(http)(:\/\/)(.*)(:.{4})/https\2localhost/" /home/vagrant/conf/ccnet.conf
-sudo -u vagrant sed -i "3 i\HTTP_SERVER_ROOT = 'https://localhost/seafhttp'" /home/vagrant/conf/seahub_settings.py
+sudo -u vagrant sed -i -E "s/(http)(:\/\/)(.*)(:.{4})/https\2$serviceURL/" /home/vagrant/conf/ccnet.conf
+sudo -u vagrant sed -i "3 i\HTTP_SERVER_ROOT = 'https://$serviceURL/seafhttp'" /home/vagrant/conf/seahub_settings.py
 
 # Seafile und seahub service erstellen
 sudo cat > /etc/systemd/system/seafile.service << EOL
@@ -190,7 +190,8 @@ echo " "
 echo "Admin Account:"
 echo "Seafile Admin Email: $seafileAdmin"
 echo "Seafile Admin Passwort: $seafileAdminPw"
-echo " "
+echo "Service URL: $serviceURL"
+echo ""
 echo "Datenbank Verbindung"
 echo "MySQL Usernamen: seafile"
 echo "MySQL User Passwort: $dbPassword"

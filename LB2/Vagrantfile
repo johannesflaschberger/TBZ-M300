@@ -10,6 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   dbPassword = "oB7ainoghae4eelah1"
   serverName = "seafilesrv"
   seafileAdmin = "email@email.com"
+  serviceURL = "localhost"
 
   # Fest programmierte Werte:
   # db user für seafile: seafile
@@ -38,7 +39,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     fe.vm.network "private_network", ip: fe01
     fe.vm.network "forwarded_port", guest: 80, host: 80
     fe.vm.network "forwarded_port", guest: 443, host: 443
-    fe.vm.provision "shell", inline: "echo 'export db01=#{db01}\nexport fe01=#{fe01}\nexport serverName=#{serverName}' > /etc/profile.d/hostips.sh"
+    fe.vm.provision "shell", inline: "echo 'export db01=#{db01}\nexport fe01=#{fe01}\nexport serverName=#{serverName} export serviceURL=#{serviceURL}' > /etc/profile.d/hostips.sh"
     fe.vm.provision "shell", inline: "echo 'export dbPassword=#{dbPassword}\nexport seafileAdmin=#{seafileAdmin}' > /etc/profile.d/passwd.sh"
     fe.vm.provision "shell", path: "seafile.sh"
   end
