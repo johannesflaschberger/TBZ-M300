@@ -71,6 +71,7 @@ vagrant up
 - [ ] Synched folder dbdirs und seahub-data
 - [ ] Dokumentation testfälle mit curl -> Bsp. Port aktiv
 - [ ] Sicherheitsmassnahmen dokumentiert ufw + reverse proxy + evtl ngrok
+- [ ] ServiceURL 
 - [ ] Reflexion über implementierung
 
 #### Testfälle
@@ -125,7 +126,7 @@ Falls man nun ein Vagranfile selber erstellen möchte, gibt es einen einfachen b
 
 Meine meist verwendeten Befehle erklärt: 
 
-| Variable | Bedeutung |
+| Befehl | Erklärung |
 | --- | --- |
 | `vagrant up` | Dieser Befehl startet die im Vagrantfile definierten Umgebung Schritt für Schritt | 
 | `vagrant halt` | Mit diesem Befehl werden die Virtuellen Maschinen gestoppt |
@@ -148,6 +149,18 @@ Mit Markkdown kann man sehr einfach gut aussehende Dokumentationen erstellen und
 `- [Test](https://google.ch) Für Verlinkungen inklusive das einbinden von Bildern`  
 u.v.m
 ### Systemsicherheit
+Reverse Proxy
+
+UFW
+Uncomplicated Firewall ist eine sehr einfach zu konfigurierende Host Firewall.
+Die Befehle zum erstellen Firewallrules ist straight forward:
+
+| Befehl | Erklärung |
+| --- | --- |
+| `ufw allow from 10.0.2.2 to any port 22` | Mit diesem Befehl werden SSH verbindungen nur von 10.0.2.2 erlaubt | 
+| `sudo ufw sudo numbered` | Mit diesem Befehl werden die Firewallrules angezeigt |
+| `sudo ufw delete 1 ` | Dieser Befehl entfernt die 1. Firewallrule |
+| `sudo ufw reload` | UFW Firewallrules neu laden |
 
 ## Reflexion
 ### Vergleich Vorwissen - Wissenszuwachs
