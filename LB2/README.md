@@ -164,6 +164,13 @@ Die Befehle zum erstellen Firewallrules ist straight forward:
 
 ## Reflexion
 ### Vergleich Vorwissen - Wissenszuwachs
+In meinem Geschäft setzten wir schon Vagrant ein für unsere Test Umgebung und somit kannte ich das Tool bereits. Mir war jedoch neu, dass man auch Variablen im Vagrantfile definieren kann. Dies führt zu einer dynamischen Umgebung. Im Bereich Linux konnte ich auch neues lernen wie z.B. der Unterschied zwischen single und double quotes (',"). 
+
 ### Was ist mir gelungen?
+Die Implementierung ist mir gelungen und ich konnte fast alles umsetzten.
+
 ### Was ist mir nicht gelungen?
+Das einzige was nicht funktioniert hat ist der gesharte Order vom Host. Zudem ist der Installationsprozess relativ langsam +/- 4min
+
 ### Zusammenfassend
+Die LB2 hat mir Spass bereitet und ich konnte einiges neues erlernen.
