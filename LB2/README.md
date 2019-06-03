@@ -153,7 +153,7 @@ Die Befehle zum erstellen Firewallrules ist straight forward:
 | Befehl | Erklärung |
 | --- | --- |
 | `ufw allow from 10.0.2.2 to any port 22` | Mit diesem Befehl werden SSH verbindungen nur von 10.0.2.2 erlaubt | 
-| `sudo ufw sudo numbered` | Mit diesem Befehl werden die Firewallrules angezeigt |
+| `sudo ufw state numbered` | Mit diesem Befehl werden die Firewallrules angezeigt |
 | `sudo ufw delete 1 ` | Dieser Befehl entfernt die 1. Firewallrule |
 | `sudo ufw reload` | UFW Firewallrules neu laden |
 
