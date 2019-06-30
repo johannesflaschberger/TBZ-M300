@@ -27,16 +27,6 @@ Verwendete images:
 - [Portainer](https://hub.docker.com/r/portainer/portainer) (Management für Container)
 - [Dem](https://hub.docker.com/r/quaide/dem) (Service Überwachungstool)
 
-
-
-Host einträge benötigt:
-
-127.0.0.1	tbz.lan
-127.0.0.1	wordpress.tbz.lan
-127.0.0.1	seafile.tbz.lan
-127.0.0.1   portainer.tbz.lan
-
-
 ## Übersicht
 
 ## Installation
