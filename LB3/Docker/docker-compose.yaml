@@ -56,7 +56,6 @@ services:
     container_name: seafile-mysql
     environment:
       - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_LOG_CONSOLE=true
     volumes:
       - seafile_db_data:/var/lib/mysql
     networks:
@@ -85,6 +84,23 @@ services:
       - "traefik.frontend.rule=Host:seafile.tbz.lan"
       - "traefik.port=80"
       - "traefik.docker.network=reverse_proxy"
+  
+  portainer:
+    image: portainer/portainer:latest
+    container_name: portainer
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/docker/portainer:/data
+    labels:
+      - "traefik.backend=portainer"
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:portainer.tbz.lan"
+      - "traefik.port=9000"
+      - "traefik.docker.network=reverse_proxy"
+    restart: always
+    networks:
+      - reverse_proxy
+      - lan
 
 volumes:
   wordpress_db_data: {}
