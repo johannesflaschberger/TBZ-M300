@@ -4,8 +4,9 @@
 - [Übersicht](#%C3%9Cbersicht)
 - [Installation](#Installation)
   - [Umgebung starten](#Umgebung-starten)
+- [Zugriff auf Daten in Volumes](#Zugriff-auf-Daten-in-Volumes)
 - [Testfälle](#Testf%C3%A4lle)
-- [Sicherheitsaspekte](#Sicherheitsaspekte)
+- [Sicherheitsaspekte / Container-Absicherung](#Sicherheitsaspekte--Container-Absicherung)
 - [Service überwachung & aktive Benachrichtigung](#Service-%C3%BCberwachung--aktive-Benachrichtigung)
 - [Dokumentation](#Dokumentation)
   - [Containerisierung / Docker](#Containerisierung--Docker)
@@ -118,6 +119,28 @@ Danach kann im `LB3/Docker` Verzeichnis mit docker-compose die Umgebung gestarte
 ```
 docker-compose up -d
 ```
+## Zugriff auf Daten in Volumes
+Um auf die in den Volumes gespeicherten Daten zuzugreifen, kann man mit dem Befehl `docker volume ls` alle Volumes angezeigen. Wenn man dann das richtige Volume gefunden hat kann man mit `docker volume inspect <volume-namen >` den Pfad auf der Festplatte herausfinden (Mountpoint). 
+
+Beispielausgabe:
+```
+[
+    {
+        "CreatedAt": "2019-06-30T12:33:07+02:00",
+        "Driver": "local",
+        "Labels": {
+            "com.docker.compose.project": "docker",
+            "com.docker.compose.version": "1.24.0",
+            "com.docker.compose.volume": "seafile_data"
+        },
+        "Mountpoint": "/var/lib/docker/volumes/docker_seafile_data/_data",
+        "Name": "docker_seafile_data",
+        "Options": null,
+        "Scope": "local"
+    }
+]
+
+```
 ## Testfälle
 - HTTP Traffic wird auf HTTPS umgeleitet ✅
   ```
@@ -173,7 +196,7 @@ docker-compose up -d
   443/tcp  open  https
   8080/tcp open  http-proxy
   ```
-## Sicherheitsaspekte
+## Sicherheitsaspekte / Container-Absicherung
 - Reverse Proxy  
   Es wurde ein Reverse Proxy (Traefik) für die Umgebung verwendet. Dieser hat den grossen Vorteil, dass man relativ einfach neue Container hinzugefügen kann. Die Konfiguration des Reverse-proxy ist in zwei Teile aufgeteilt, es gibt die `traefik.toml` Datei und in der Container Definition noch einen Abschnitt `labels:` der festgelegt werden muss.  
 
@@ -209,6 +232,21 @@ docker-compose up -d
 
 - Netzwerkzugriff beschränken  
   Im Docker-compose file sind bis auf die vom Reverse Proxy benötigten Ports keine weiteren Ports freigegeben. Die Kommunikation von aussen zu den Container geht somit ausschliesslich über den Reverse Proxy.
+
+  ```
+  nmap localhost
+  ```
+  Ausgabe:
+  ```
+  Starting Nmap 7.70 ( https://nmap.org ) at 2019-06-30 14:44 CEST
+  Nmap scan report for localhost (127.0.0.1)
+  Host is up (0.000052s latency).
+  Not shown: 996 closed ports
+  PORT     STATE SERVICE
+  80/tcp   open  http
+  443/tcp  open  https
+  8080/tcp open  http-proxy
+  ```
 
 ## Service überwachung & aktive Benachrichtigung
 Mit der Hilfe des Containers "Docker Event Monitor" kurz dem, können die erstellen Services nach Änderungen überprüft werden. Sollte nun eine Änderung durchgeführt werden, wie z. B. das zerstören eines Containers, dann kann eingerichtet werden, dass eine Nachricht an Slack, Sparkpost oder wie in meinem Beispiel Discord versendet wird. In einer config.yml Datei wird konfiguriert, welche Events gemeldet sollen. In dem Bild unten sieht man wie eine solche Nachricht aussieht.
@@ -264,12 +302,17 @@ Hier erkläre ich ein paar der Docker Befehle:
 | `docker-compose down` | Dieser Befehl stoppt eine Docker-compose Umgebung und entfernt anschliessend noch alle Container. |
 
 ### Microservices
+In der Softwareentwicklung ist diese Art von Programm momentan sehr beliebt. Hierbei wird eine Applikation so weit aufgeteilt, dass viele kleine Services entstehen. So kann man beispielsweise dynamisch die Applikation skalieren, sollten also plötzlich 1000 User mehr auf eine Web-Applikation zugreifen, könnten z. B. 10 weitere Frontends gestartet werden. Und sobald es wieder weniger User sind, können diese Services auch wieder gestoppt werden. Ein weiterer Vorteil ist auch, dass Updates ohne Unterbruch durchgeführt werden können. Ein Wichtiger Bestandteil von Microservices sind Load-Balancer, denn ohne die, würden die zusätzlichen Instanzen nicht wirklich viel bringen. Denn die Load-Balancer teilen die Last gleichmässig auf somit kann es auch fast nicht vorkommen das ein Service überlastet wird.
 
 ## Reflexion
 ### Vergleich Vorwissen - Wissenszuwachs
+Ich hatte bereits zuvor im Geschäft mit Docker zutun und kannte deshalb die meisten Befehle bereits. Somit ist mir das arbeiten mit Docker nicht sonderlich schwer gefallen. Wirklich neu gelernt habe ich wie man Traefik konfiguriert und wie man die Docker Services überwachen kann.
 
 ### Was ist mir gelungen?
+Ich finde, die gesamte Implementation ist mir gelungen. Besonders den Reverse Proxy, denn dieser war nicht ganz einfach aufzusetzen, da gewisse Teile recht unverständlich aufgebaut sind.
 
 ### Was ist mir nicht gelungen?
+Anfangs wollte ich mit Grafana, Prometheus und Cadvisor ein schönes Dashboard aufbaunen, dies musste ich aber wegen zu vielen Problemen auslassen. Sonst konnte ich alles, was ich geplant habe, umsetzten. 
 
 ### Zusammenfassend
+Das erarbeiten der LB3 hat mir spass bereitet und ich denke mein Endprodukt kann sich sehen lassen. Da ich ja bereits im Geschäft mit Docker zu tun hatte, ist mir die Umsetzung auch relativ leicht gefallen.
