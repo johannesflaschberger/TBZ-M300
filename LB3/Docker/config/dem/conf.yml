@@ -43,4 +43,4 @@ events: ## The Docker event types that you want to trigger alerts for
 integrations: ## Available integrations  
   discord:
     enabled: True
-    url: https://discordapp.com/api/webhooks/594842133236678668/eeXukPx9orh6Bx_jwrJKJzkdNzP8e0v3gI4cvRqptNsm97VVJgD61OyIdmSx3k9QCaLW
+    url: https://discordapp.com/api/webhooks/<webhook-id>
