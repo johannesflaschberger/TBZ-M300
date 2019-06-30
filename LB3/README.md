@@ -6,7 +6,7 @@
   - [Umgebung starten](#Umgebung-starten)
 - [Testfälle](#Testf%C3%A4lle)
 - [Sicherheitsaspekte](#Sicherheitsaspekte)
-- [Service überwachung](#Service-%C3%BCberwachung)
+- [Service überwachung & aktive Benachrichtigung](#Service-%C3%BCberwachung--aktive-Benachrichtigung)
 - [Dokumentation](#Dokumentation)
   - [Containerisierung / Docker](#Containerisierung--Docker)
   - [Microservices](#Microservices)
@@ -29,7 +29,7 @@ Verwendete images:
 
 ## Übersicht
 
-Netzplan
+Netzplan:
 ```
 +------------------------------------------------------------------------------------------------------------+
 |                                                                                                            |
@@ -85,12 +85,25 @@ Netzplan
 |                                                         |                                                  |
 +---------------------------------------------------------+--------------------------------------------------+
 ```
-Schichtenmodell
+Schichtenmodell:
+```
++---------------------------------------------------------------+
+| Container Engine: Docker                                      |
++---------------------------------------------------------------+
+| Gast OS: Ubuntu 19.04                                         |
++---------------------------------------------------------------+
+| Hypervisor: VMware Workstation                                |
++---------------------------------------------------------------+
+| Host OS: Windows 10                                           |
++---------------------------------------------------------------+
+| Notebook:  Schulnetz 10.x.x.x                                 |
++---------------------------------------------------------------+
+```
 
 ## Installation
 
 ### Umgebung starten
-Bevor die Umgebung gestartet werden kann muss noch das Reverse-Proxy Netzwerk manuell erstellt werden. Hierfür kann der folgende Befehl verwendet werden
+Bevor die Umgebung gestartet werden kann muss noch das Reverse-Proxy Netzwerk manuell erstellt werden. Hierfür kann der folgende Befehl verwendet werden:
 ```
 docker network create reverse_proxy
 ```
@@ -106,7 +119,60 @@ Danach kann im `LB3/Docker` Verzeichnis mit docker-compose die Umgebung gestarte
 docker-compose up -d
 ```
 ## Testfälle
-
+- HTTP Traffic wird auf HTTPS umgeleitet ✅
+  ```
+  curl http://seafile.tbz.lan -vk
+  ```
+  Ergebnis:
+  ```
+  > GET / HTTP/1.1
+  > Host: seafile.tbz.lan
+  > User-Agent: curl/7.64.0
+  > Accept: */*
+  > 
+  < HTTP/1.1 302 Found
+  < Location: https://seafile.tbz.lan:443/
+  < Date: Sun, 30 Jun 2019 12:40:01 GMT
+  < Content-Length: 5
+  < Content-Type: text/plain; charset=utf-8
+  ```
+- Verbindung über HTTP funktioniert ✅
+  ```
+  curl https://wordpress.tbz.lan -vk
+  ```
+  Ergebnis:
+  ```
+  > GET / HTTP/2
+  > Host: wordpress.tbz.lan
+  > User-Agent: curl/7.64.0
+  > Accept: */*
+  > 
+  * Connection state changed (MAX_CONCURRENT_STREAMS == 250)!
+  < HTTP/2 302 
+  < cache-control: no-cache, must-revalidate, max-age=0
+  < content-type: text/html; charset=UTF-8
+  < date: Sun, 30 Jun 2019 12:42:36 GMT
+  < expires: Wed, 11 Jan 1984 05:00:00 GMT
+  < location: https://wordpress.tbz.lan/wp-admin/install.php
+  < server: Apache/2.4.25 (Debian)
+  < x-powered-by: PHP/7.3.6
+  < x-redirect-by: WordPress
+  < content-length: 0
+  ```
+- Es sind nur die Ports 80, 8080 und 443 geöffnet ✅
+  ```
+  nmap localhost
+  ```
+  ```
+  Starting Nmap 7.70 ( https://nmap.org ) at 2019-06-30 14:44 CEST
+  Nmap scan report for localhost (127.0.0.1)
+  Host is up (0.000052s latency).
+  Not shown: 996 closed ports
+  PORT     STATE SERVICE
+  80/tcp   open  http
+  443/tcp  open  https
+  8080/tcp open  http-proxy
+  ```
 ## Sicherheitsaspekte
 - Reverse Proxy  
   Es wurde ein Reverse Proxy (Traefik) für die Umgebung verwendet. Dieser hat den grossen Vorteil, dass man relativ einfach neue Container hinzugefügen kann. Die Konfiguration des Reverse-proxy ist in zwei Teile aufgeteilt, es gibt die `traefik.toml` Datei und in der Container Definition noch einen Abschnitt `labels:` der festgelegt werden muss.  
@@ -143,7 +209,8 @@ docker-compose up -d
 
 - Netzwerkzugriff beschränken  
   Im Docker-compose file sind bis auf die vom Reverse Proxy benötigten Ports keine weiteren Ports freigegeben. Die Kommunikation von aussen zu den Container geht somit ausschliesslich über den Reverse Proxy.
-## Service überwachung
+
+## Service überwachung & aktive Benachrichtigung
 Mit der Hilfe des Containers "Docker Event Monitor" kurz dem, können die erstellen Services nach Änderungen überprüft werden. Sollte nun eine Änderung durchgeführt werden, wie z. B. das zerstören eines Containers, dann kann eingerichtet werden, dass eine Nachricht an Slack, Sparkpost oder wie in meinem Beispiel Discord versendet wird. In einer config.yml Datei wird konfiguriert, welche Events gemeldet sollen. In dem Bild unten sieht man wie eine solche Nachricht aussieht.
 
 ![Docker Event Monitor in Discord ](../images/discord-dem.png "Docker Event Monitor in Discord")
@@ -183,7 +250,18 @@ integrations: ## Available integrations
 ## Dokumentation
 
 ### Containerisierung / Docker
-Wissenstand und definition + Befehle
+Heutzutage ist die Containerisierung ein wichtiges Thema. Immer mehr und mehr Firmen setzten auf die Containervirtualisierung. Umso wichtiger ist es, dieses Thema gut zu verstehen. Die Container an sich, teilen sich mit dem host den Kernel und verwenden unter Linux ensprechende Kernelmodule um die Container von dem Host zu isolieren. Trotzdem bietet die Containervirtualisierung keine vergleichbar hohe Isolierung wie bei Virtuellen Maschinen. Vorteile sind auf jeden Fall, die kurzen Aufstartzeiten, geringerer CPU-Overhead, Portierbar, mehrere Instanzen des gleichen Images können gleichzeitig laufen.
+
+Hier erkläre ich ein paar der Docker Befehle:
+
+| Befehl | Erklärung |
+| --- | --- |
+| `docker run` | Mit diesem Befehl kann ein Container gestartet werden. Typische parameter sind z. B. `-p`,`--name`, `--rm`. Genäuere Informationen können auch aus dem Manual entnommen werden -> `man docker run`| 
+| `docker exec` | Mithilfe dieses Befehls kann auf ein Container zugegriffen werden. Sozusagen das SSH um auf die Container zu gelangen. Bei dem Zugriff muss zwingen ein Commandline Interpreter mitgegeben werden. Z. B. `docker exec -it seafile bash`. |
+| `docker ps` | Dieser Befehl listet alle laufende Container auf. Es können zusätzlich Informationen entnommen werden wie z. B. welche Ports freigegeben wurden und welches Image verwendet wurde. |
+| `docker stop` | Mit diesem Befehl können Container gestoppt werden. Hierfür muss entweder die Container ID verwendet werden oder den Namen. |
+| `docker-compose up` | Mit diesem Befehl kann eine Docker-compose Umgebung gestartet werden. |
+| `docker-compose down` | Dieser Befehl stoppt eine Docker-compose Umgebung und entfernt anschliessend noch alle Container. |
 
 ### Microservices
 
