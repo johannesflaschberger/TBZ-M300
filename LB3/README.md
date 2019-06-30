@@ -20,6 +20,8 @@ Seafile, Wordpress, Reverse Proxy, Grafana Dashboards
 
 docker network create reverse_proxy
 
+admin:admin passwort für dashboard
+
 
 ## Übersicht
 

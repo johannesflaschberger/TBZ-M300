@@ -2,10 +2,26 @@
 version: '3.7'
 
 services:
+  traefik:
+    image: traefik:latest
+    restart: always
+    volumes:
+      - $PWD/config/reverse-proxy:/etc/traefik
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - reverse_proxy
+      - lan
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+
   wordpress_db:
     image: mysql:5.7
     volumes: 
       - wordpress_db_data:/var/lib/mysql
+    networks:
+      - lan
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
@@ -17,6 +33,9 @@ services:
     depends_on:
       - wordpress_db
     image: wordpress:latest
+    networks:
+      - reverse_proxy
+      - lan
     environment:
       WORDPRESS_DB_HOST: wordpress_db:3306
       WORDPRESS_DB_USER: wordpress
@@ -28,6 +47,50 @@ services:
       - "traefik.frontend.rule=Host:wordpress.tbz.lan"
       - "traefik.port=80"
       - "traefik.docker.network=reverse_proxy"
+  
+  db:
+    image: mysql:5.7
+    container_name: seafile-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_LOG_CONSOLE=true
+    volumes:
+      - seafile_db_data:/var/lib/mysql
+    networks:
+      - lan
+
+  seafile:
+    image: seafileltd/seafile-mc:latest
+    container_name: seafile
+    volumes:
+      - seafile_data:/shared
+    environment:
+      - DB_HOST=db
+      - DB_ROOT_PASSWD=password
+      - SEAFILE_ADMIN_EMAIL=admin@tbz.lan
+      - SEAFILE_ADMIN_PASSWORD=admin
+      - SEAFILE_SERVER_LETSENCRYPT=false
+      - SEAFILE_SERVER_HOSTNAME=seafile.tbz.lan
+    depends_on:
+      - db
+    networks:
+      - reverse_proxy
+      - lan
+    labels:
+      - "traefik.backend=seafile"
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:seafile.tbz.lan"
+      - "traefik.port=80"
+      - "traefik.docker.network=reverse_proxy"
 
 volumes:
   wordpress_db_data: {}
+  seafile_data: {}
+  seafile_db_data: {}
+
+networks:
+  reverse_proxy:
+    external: 
+      name: reverse_proxy
+  lan:
+    driver: bridge
