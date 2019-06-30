@@ -213,7 +213,7 @@ docker-compose up -d
 ## Service überwachung & aktive Benachrichtigung
 Mit der Hilfe des Containers "Docker Event Monitor" kurz dem, können die erstellen Services nach Änderungen überprüft werden. Sollte nun eine Änderung durchgeführt werden, wie z. B. das zerstören eines Containers, dann kann eingerichtet werden, dass eine Nachricht an Slack, Sparkpost oder wie in meinem Beispiel Discord versendet wird. In einer config.yml Datei wird konfiguriert, welche Events gemeldet sollen. In dem Bild unten sieht man wie eine solche Nachricht aussieht.
 
-![Docker Event Monitor in Discord ](../images/discord-dem.png "Docker Event Monitor in Discord")
+![Docker Event Monitor in Discord ](../images/dem-discord.png "Docker Event Monitor in Discord")
 
 Beispiel einer Konfiguration:
 ```
