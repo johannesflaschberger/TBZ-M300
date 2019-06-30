@@ -5,7 +5,7 @@ services:
   traefik:
     image: traefik:latest
     container_name: reverse-proxy
-    restart: always
+    restart: on-failure
     volumes:
       - $PWD/config/reverse-proxy:/etc/traefik
       - /var/run/docker.sock:/var/run/docker.sock
@@ -24,7 +24,7 @@ services:
       - wordpress_db_data:/var/lib/mysql
     networks:
       - lan
-    restart: always
+    restart: on-failure
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: wordpress
@@ -34,6 +34,7 @@ services:
   wordpress:
     image: wordpress:latest
     container_name: wordpress
+    restart: on-failure
     depends_on:
       - wordpress_db
     networks:
@@ -54,6 +55,7 @@ services:
   db:
     image: mysql:5.7
     container_name: seafile-mysql
+    restart: on-failure
     environment:
       - MYSQL_ROOT_PASSWORD=password
     volumes:
@@ -64,6 +66,7 @@ services:
   seafile:
     image: seafileltd/seafile-mc:latest
     container_name: seafile
+    restart: on-failure
     volumes:
       - seafile_data:/shared
     environment:
@@ -97,10 +100,16 @@ services:
       - "traefik.frontend.rule=Host:portainer.tbz.lan"
       - "traefik.port=9000"
       - "traefik.docker.network=reverse_proxy"
-    restart: always
+    restart: on-failure
     networks:
       - reverse_proxy
       - lan
+    
+  event-monitor:
+    image: quaide/dem:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - $PWD/config/dem/conf.yml:/app/conf.yml
 
 volumes:
   wordpress_db_data: {}

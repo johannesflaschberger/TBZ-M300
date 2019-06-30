@@ -6,6 +6,7 @@
   - [Umgebung starten](#Umgebung-starten)
 - [Testfälle](#Testf%C3%A4lle)
 - [Sicherheitsaspekte](#Sicherheitsaspekte)
+- [Service überwachung](#Service-%C3%BCberwachung)
 - [Dokumentation](#Dokumentation)
   - [Containerisierung / Docker](#Containerisierung--Docker)
   - [Microservices](#Microservices)
@@ -39,6 +40,14 @@ Host einträge benötigt:
 ## Testfälle
 
 ## Sicherheitsaspekte
+- Reverse Proxy
+  Traefik
+- Nestarts begrenzen
+  restart: on-failure
+- Netzwerkzugriff beschränken
+
+## Service überwachung
+
 
 ## Dokumentation
 
