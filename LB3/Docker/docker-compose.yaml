@@ -4,6 +4,7 @@ version: '3.7'
 services:
   traefik:
     image: traefik:latest
+    container_name: reverse-proxy
     restart: always
     volumes:
       - $PWD/config/reverse-proxy:/etc/traefik
@@ -18,6 +19,7 @@ services:
 
   wordpress_db:
     image: mysql:5.7
+    container_name: wordpress-db
     volumes: 
       - wordpress_db_data:/var/lib/mysql
     networks:
@@ -30,9 +32,10 @@ services:
       MYSQL_PASSWORD: wordpress
   
   wordpress:
+    image: wordpress:latest
+    container_name: wordpress
     depends_on:
       - wordpress_db
-    image: wordpress:latest
     networks:
       - reverse_proxy
       - lan

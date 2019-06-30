@@ -22,6 +22,11 @@ docker network create reverse_proxy
 
 admin:admin passwort für dashboard
 
+Host einträge benötigt:
+
+127.0.0.1	tbz.lan
+127.0.0.1	wordpress.tbz.lan
+127.0.0.1	seafile.tbz.lan
 
 ## Übersicht
 
