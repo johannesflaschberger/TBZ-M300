@@ -29,6 +29,64 @@ Verwendete images:
 
 ## Übersicht
 
+Netzplan
+```
++------------------------------------------------------------------------------------------------------------+
+|                                                                                                            |
+|  Internes Netz: lan                                                                                        |
+|  Externes Netz: reverse-proxy                                                                              |
+|                                                                                                            |
++---------------------------------------------------------+--------------------------------------------------+
+|                                                         |                                                  |
+|  Reverse Proxy                                          |  Datenbank x2                                    |
+|   Image: traefik:latest                                 |   Image: mysql:5.7                               |
+|   Container-name: reverse-proxy                         |   Container_name: wordpress-db                   |
+|   Restart: on-failure                                   |   Volumes:                                       |
+|   Volumes:                                              |    * db_data:/var/lib/mysql                      |
+|    * $PWD/config/reverse-proxy:/etc/traefik             |   Networks:                                      |
+|    * /var/run/docker.sock:/var/run/docker.sock          |    * lan                                         |
+|   Networks:                                             |   Restart: on-failure                            |
+|    * lan                                                |   Umgebungsvars: Root-pw, User, User-pw und DB   |
+|    * reverse-proxy                                      |                                                  |
+|   Ports: 80, 8080, 443                                  |                                                  |
+|                                                         |                                                  |
++------------------------------------------------------------------------------------------------------------+
+|                                                         |                                                  |
+|  Wordpress                                              |  Seafile                                         |
+|   Image: wordpress:latest                               |   Image: seafileltd/seafile-mc:latest            |
+|   Container_name: wordpress                             |   Container_name: seafile                        |
+|   Networks:                                             |   Volumes:                                       |
+|    * reverse_proxy                                      |    * seafile_data:/shared                        |
+|    * lan                                                |   Networks:                                      |
+|   Restart: on-failure                                   |    * reverse_proxy                               |
+|   Umgebungsvars: DB-Host, User, PW und DB Name          |    * lan                                         |
+|   Labels für Reverse proxy:                             |   Restart: on-failure                            |
+|    * Domain: wordpress.tbz.lan                          |   Labels für Reverse proxy:                      |
+|    * Port: 80                                           |    * Domain: seafile.tbz.lan                     |
+|    * Netzwerk: reverse_proxy                            |    * Port: 80                                    |
+|                                                         |    * Netzwerk: reverse_proxy                     |
+|                                                         |                                                  |
++------------------------------------------------------------------------------------------------------------+
+|                                                         |                                                  |
+|  Portainer                                              |  Event Monitor                                   |
+|   Image: portainer/portainer:latest                     |   Image: quaide/dem:latest                       |
+|   Container_name: portainer                             |   Volumes:                                       |
+|   Volumes:                                              |    - /var/run/docker.sock:/var/run/docker.sock   |
+|    * /^ar/run/docker.sock:/var/run/docker.sock          |    - $PWD/config/dem/conf.yml:/app/conf.yml      |
+|    * /var/docker/portainer:/data                        |                                                  |
+|   Networks:                                             |                                                  |
+|    * reverse_proxy                                      |                                                  |
+|    * lan                                                |                                                  |
+|   Restart: on-failure                                   |                                                  |
+|   Labels:                                               |                                                  |
+|    * Domain: portainer.tbz.lan                          |                                                  |
+|    * Port: 9000                                         |                                                  |
+|    * Netzwerk: reverse-proxy                            |                                                  |
+|                                                         |                                                  |
++---------------------------------------------------------+--------------------------------------------------+
+```
+Schichtenmodell
+
 ## Installation
 
 ### Umgebung starten
