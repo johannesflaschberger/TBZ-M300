@@ -11,6 +11,7 @@
 - [Dokumentation](#Dokumentation)
   - [Containerisierung / Docker](#Containerisierung--Docker)
   - [Microservices](#Microservices)
+  - [Kubernetes Übung](#Kubernetes-%C3%9Cbung)
 - [Reflexion](#Reflexion)
   - [Vergleich Vorwissen - Wissenszuwachs](#Vergleich-Vorwissen---Wissenszuwachs)
   - [Was ist mir gelungen?](#Was-ist-mir-gelungen)
@@ -304,6 +305,32 @@ Hier erkläre ich ein paar der Docker Befehle:
 ### Microservices
 In der Softwareentwicklung ist diese Art von Programm momentan sehr beliebt. Hierbei wird eine Applikation so weit aufgeteilt, dass viele kleine Services entstehen. So kann man beispielsweise dynamisch die Applikation skalieren, sollten also plötzlich 1000 User mehr auf eine Web-Applikation zugreifen, könnten z. B. 10 weitere Frontends gestartet werden. Und sobald es wieder weniger User sind, können diese Services auch wieder gestoppt werden. Ein weiterer Vorteil ist auch, dass Updates ohne Unterbruch durchgeführt werden können. Ein Wichtiger Bestandteil von Microservices sind Load-Balancer, denn ohne die, würden die zusätzlichen Instanzen nicht wirklich viel bringen. Denn die Load-Balancer teilen die Last gleichmässig auf somit kann es auch fast nicht vorkommen das ein Service überlastet wird.
 
+### Kubernetes Übung
+Als erstes clont man das Github Repository lernkube.
+```
+git clone https://github.com/mc-b/lernkube
+```
+Dann bearbeitet man das `config.yamk` file ensprechend. In meinem Fall war ich der Master node somit musste ich das File an den folgenden Stellen anpassen:
+```
+use_dhcp: true
+network_type: public_network
+```
+Danach verbindet man sich mit dem Master node per ssh.
+```
+vagrant ssh master-01
+```
+Als nächstes muss man dann den folgenden Befehl eingeben, damit der Befehl angezeigt wird der auf dem Worker node ausgeführt werden muss:
+```
+sudo kubectl token create --print-join-command
+```
+Dann kann man die VM wieder verlassen und mit dem nächsten Befehl, der ein Skript ausführt, werden die Umgebungsvariablen so angepasst, dass der Master node auch von ausserhalb gesteuert werden kann.
+```
+source kubeenv
+```
+Nun kann man auch schon das erste deployment starten z.B. mit Node red.
+```
+kubectl apply -f duk/iot/nodered.yaml
+```
 ## Reflexion
 ### Vergleich Vorwissen - Wissenszuwachs
 Ich hatte bereits zuvor im Geschäft mit Docker zutun und kannte deshalb die meisten Befehle bereits. Somit ist mir das arbeiten mit Docker nicht sonderlich schwer gefallen. Wirklich neu gelernt habe ich wie man Traefik konfiguriert und wie man die Docker Services überwachen kann.
